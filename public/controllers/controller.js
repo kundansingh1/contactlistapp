@@ -1,5 +1,5 @@
 function AppCtrl($scope, $http) {
-	console.log('Hello World from Controller');
+	console.log('Hello world from controller');
 
 	var refresh = function() {
 		$http.get('/contactlist').success(function(response) {
@@ -22,6 +22,20 @@ function AppCtrl($scope, $http) {
 	$scope.remove = function(id) {
 		console.log(id);
 		$http.delete('/contactlist/' + id).success(function(res) {
+			refresh();
+		});
+	};
+
+	$scope.edit = function(id) {
+		console.log(id);
+		$http.get('/contactlist/' + id).success(function(res) {
+			$scope.contact = res;
+		});
+	};
+
+	$scope.update = function() {
+		console.log($scope.contact._id);
+		$http.put('/contactlist/' + $scope.contact._id, $scope.contact).success(function(res) {
 			refresh();
 		});
 	};
